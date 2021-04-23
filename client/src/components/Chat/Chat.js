@@ -9,7 +9,7 @@ import TextContainer from '../TextContainer/TextContainer'
 
 let socket
 
-const ENDPOINT = `localhost:5000`
+const ENDPOINT = process.env.REACT_APP_ENDPOINT || `localhost:5000`
 
 const Chat = ({ location }) => {
     const [name, setName] = useState('')
