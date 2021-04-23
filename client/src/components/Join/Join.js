@@ -1,18 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import io from 'socket.io-client'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
-import Chat from '../Chat/Chat'
+import React, { useState } from 'react'
 
 import './Join.css'
-
-// let socket
-
-// const ENDPOINT = process.env.REACT_APP_ENDPOINT || `localhost:5000`
 
 const Join = ({ signIn }) => {
     const [name, setName] = useState('')
@@ -23,17 +11,7 @@ const Join = ({ signIn }) => {
             event.preventDefault()
             console.log("sign in", name, room);
             signIn({ name, room })
-            // socket.emit('join', { name, room }, (error) => {
-            //     if (error) {
-            //         alert(error)
-            //     } else {
-            //         // setName(name)
-            //         // setRoom(room)
-            //         signIn({ name, room })
-            //     }
-            // })
         }
-
     }
 
     return (

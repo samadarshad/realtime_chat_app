@@ -13,25 +13,10 @@ const socket = io(ENDPOINT)
 const App = () => {
     const [name, setName] = useState('')
     const [room, setRoom] = useState('')
-    let history = useHistory();
-
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState([])
-    // useEffect(() => {
-    //     socket = io(ENDPOINT)
 
-    //     // return () => {
-    //     //     socket.emit('disconnect')
-
-    //     //     socket.off()
-    //     // }
-    // }, [])
-
-    // useEffect(() => {
-    //     socket.on('roomData', ({ users }) => {
-    //         setUsers(users)
-    //     })
-    // }, [socket])
+    let history = useHistory();
 
     useEffect(() => {
         socket.on('message', (message) => {
@@ -54,13 +39,12 @@ const App = () => {
                 history.push('/chat')
             }
         })
-
     }
 
     return (
         <>
             <Route path="/" exact render={() => <Join signIn={signIn} />} />
-            <Route path="/chat" render={() => <Chat socket={socket} name={name} room={room} initialMessages={messages} initialUsers={users} />} />
+            <Route path="/chat" render={() => <Chat socket={socket} name={name} room={room} messages={messages} users={users} />} />
         </>
     )
 }

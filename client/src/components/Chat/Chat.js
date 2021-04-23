@@ -5,29 +5,14 @@ import Input from '../Input/Input'
 import Messages from '../Messages/Messages'
 import TextContainer from '../TextContainer/TextContainer'
 
-const Chat = ({ socket, name, room, initialMessages, initialUsers }) => {
-
+const Chat = ({ socket, name, room, messages, users }) => {
     const [message, setMessage] = useState('')
-    const [messages, setMessages] = useState([])
-    const [users, setUsers] = useState([])
 
     useEffect(() => {
-        setMessages(initialMessages)
-        setUsers(initialUsers)
         return () => {
             socket.emit('disconnect')
             socket.off()
         }
-    }, [])
-
-    useEffect(() => {
-        socket.on('message', (message) => {
-            setMessages(messages => [...messages, message])
-        })
-
-        socket.on('roomData', ({ users }) => {
-            setUsers(users)
-        })
     }, [socket])
 
     const sendMessage = (event) => {
