@@ -24,9 +24,9 @@ const App = () => {
             setMessages(messages => [...messages, message])
         })
 
-        socket.on('roomData', ({ users }) => {
-            setUsers(users)
-        })
+        // socket.on('roomData', ({ users }) => {
+        //     setUsers(users)
+        // })
 
         socket.on('allUsers', ({ users }) => {
             setUsers(users)
