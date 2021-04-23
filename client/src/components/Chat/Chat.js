@@ -23,12 +23,12 @@ const Chat = ({ location }) => {
 
         socket = io(ENDPOINT)
 
-        setName(name)
-        setRoom(room)
-
         socket.emit('join', { name, room }, (error) => {
             if (error) {
                 alert(error)
+            } else {
+                setName(name)
+                setRoom(room)
             }
         })
 
