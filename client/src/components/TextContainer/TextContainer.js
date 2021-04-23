@@ -13,9 +13,9 @@ const TextContainer = ({ users }) => (
                         <h1>People currently chatting:</h1>
                         <div className="activeContainer">
                             <h2>
-                                {users.map(({ name }) => (
+                                {users.map(({ name, room }) => (
                                     <div key={name} className="activeItem">
-                                        {name}
+                                        {name} in room {room}
                                         <img alt="Online Icon" src={onlineIcon} />
                                     </div>
                                 ))}
@@ -26,7 +26,6 @@ const TextContainer = ({ users }) => (
                 )
                 : null
         }
-
     </div>
 )
 

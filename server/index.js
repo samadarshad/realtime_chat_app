@@ -3,7 +3,7 @@ const socketio = require('socket.io')
 const http = require('http')
 const cors = require('cors')
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require('./users')
+const { addUser, removeUser, getUser, getUsersInRoom, getAllRooms, getAllUsers } = require('./users')
 
 const PORT = process.env.PORT || 5000
 
@@ -21,6 +21,11 @@ const io = socketio(server, {
 })
 
 io.on('connection', (socket) => {
+    socket.on('onLobby', () => {
+        console.log("emit users", getAllUsers());
+        socket.emit('allUsers', { users: getAllUsers() })
+    })
+
     socket.on('join', ({ name, room }, callback) => {
         const { error, user } = addUser({ id: socket.id, name, room })
 
@@ -32,6 +37,7 @@ io.on('connection', (socket) => {
         socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` })
 
         io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
+        socket.broadcast.emit('allUsers', { users: getAllUsers() })
 
         callback()
     })
@@ -50,6 +56,7 @@ io.on('connection', (socket) => {
         if (user) {
             io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` })
             io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
+            socket.broadcast.emit('allUsers', { users: getAllUsers() })
         }
     })
 })

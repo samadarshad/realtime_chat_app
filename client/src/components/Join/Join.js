@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
-
 import './Join.css'
+import TextContainer from '../TextContainer/TextContainer'
 
-const Join = ({ signIn }) => {
+const Join = ({ signIn, users }) => {
     const [name, setName] = useState('')
     const [room, setRoom] = useState('')
 
     function joinRoom(event) {
         if (name && room) {
             event.preventDefault()
-            console.log("sign in", name, room);
             signIn({ name, room })
         }
     }
@@ -22,6 +21,7 @@ const Join = ({ signIn }) => {
                 <div><input placeholder="Room" className="joinInput mt-20" type="text" onChange={(event) => setRoom(event.target.value)} /></div>
                 <button className="button mt-20" type="submit" onClick={(event) => joinRoom(event)}>Sign In</button>
             </div>
+            <TextContainer users={users} />
         </div>
     )
 }

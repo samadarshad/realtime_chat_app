@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import Join from './components/Join/Join'
 import Chat from './components/Chat/Chat'
 
+
 const ENDPOINT = process.env.REACT_APP_ENDPOINT || `localhost:5000`
 
 const socket = io(ENDPOINT)
@@ -26,7 +27,19 @@ const App = () => {
         socket.on('roomData', ({ users }) => {
             setUsers(users)
         })
+
+        socket.on('allUsers', ({ users }) => {
+            setUsers(users)
+            console.log("allUsers", users);
+        })
+
+        joinLobby()
+
     }, [])
+
+    function joinLobby() {
+        socket.emit('onLobby')
+    }
 
 
     function signIn({ name, room }) {
@@ -43,7 +56,7 @@ const App = () => {
 
     return (
         <>
-            <Route path="/" exact render={() => <Join signIn={signIn} />} />
+            <Route path="/" exact render={() => <Join signIn={signIn} users={users} />} />
             <Route path="/chat" render={() => <Chat socket={socket} name={name} room={room} messages={messages} users={users} />} />
         </>
     )
